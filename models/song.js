@@ -9,7 +9,7 @@ const SongSchema = mongoose.Schema({
    },
    author: {
        type: String,
-       required: true,
+       default: "",
        trim: true
    },
    lyric: {

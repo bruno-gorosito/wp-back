@@ -3,9 +3,10 @@
 const express = require("express");
 const connectDB = require("./config/db")
 const bodyParser = require("body-parser");
+const cors = require('cors')
 //create the server
 const app = express();
-
+app.use(cors())
 //Connect to db
 connectDB();
 
