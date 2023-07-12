@@ -9,21 +9,21 @@ const SongSchema = mongoose.Schema({
    },
    author: {
        type: String,
-       default: "",
+       default: "Sin definir",
        trim: true
    },
    lyric: {
        type: String,
-       default:'No Lyric Available', 
+       default:'Letra no disponible', 
        trim: true
    },
    tone: {
        type: String,
-       default: 'Not defined'
+       default: 'Sin definir'
    },
    intensity: {
        type: String,
-       default: 'Not defined'
+       default: 'Sin definir'
    }
 });
 

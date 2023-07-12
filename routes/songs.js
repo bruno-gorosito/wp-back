@@ -11,7 +11,11 @@ router.post('/', (req, res) => {
 })
 
 router.get('/', (req, res) => {
-    res.send('ola')
+    songController.getSongs(req, res)
+})
+
+router.get('/:id', (req, res) => {
+    songController.getSong(req, res)
 })
 
 module.exports = router;
