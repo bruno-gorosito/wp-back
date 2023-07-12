@@ -3,9 +3,21 @@ const Song = require('../models/song')
 
 exports.createSong = async(req, res) => {
     try {
-        let song;
-        song = new Song(req.body);
-        console.log(song)
+        let aux;
+        const song = new Song(req.body);
+        if (song.author) {
+            aux = song.name.replaceAll(" ", "%20") + "%20" + song.author.replaceAll(" ", "%20")
+        } else {
+            aux = song.name.replaceAll(" ", "%20") 
+        }
+        const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${aux}&key=${process.env.API_KEY_GOOGLE}`
+        const headers = {
+            Referer: process.env.URL_FRONT // Reemplaza esto con la URL de tu sitio web
+          };
+        let a = await fetch(url, {headers})
+        let result = await a.json();
+        song.idVideo = result.items[0].id.videoId;
+        
         await song.save();
         res.send('Cancion añadida.').status(200);
     } catch (error) {
@@ -27,7 +39,8 @@ exports.getSongs = async(req, res) => {
 
 exports.getSong = async(req, res) => {
     try {
-        
+        const song = await Song.findById(req.params.id);
+        res.send(song);
     } catch (error) {
         console.log(error);
         res.status(400).send('Hubo un error');
