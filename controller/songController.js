@@ -5,10 +5,11 @@ exports.createSong = async(req, res) => {
     try {
         let aux;
         const song = new Song(req.body);
-        if (song.author) {
-            aux = String(song.name).replaceAll(" ", "%20") + "%20" +String(song.author).replaceAll(" ", "%20")
+        const {name, author} = song;
+        if (author) {
+            aux = name.replaceAll(" ", "%20") + "%20" + author.replaceAll(" ", "%20")
         } else {
-            aux = String(song.name).replaceAll(" ", "%20") 
+            aux = name.replaceAll(" ", "%20") 
         }
         const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${aux}&key=${process.env.API_KEY_GOOGLE}`
         const headers = {
