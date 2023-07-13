@@ -6,9 +6,11 @@ const axios = require('axios');
 exports.createSong = async(req, res) => {
     try {
         let aux;
+        console.log(req.body)
         const song = new Song(req.body);
         const {name, author} = song;
-        console.log(typeof name)
+
+        
         if (author) {
             aux = name.replace(" ", "%20") + "%20" + author.replace(" ", "%20");
         } else {
@@ -17,13 +19,14 @@ exports.createSong = async(req, res) => {
 
         const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${aux}&key=${process.env.API_KEY_GOOGLE}`
         
-        console.log(url)
         const headers = {
             Referer: process.env.URL_FRONT // Reemplaza esto con la URL de tu sitio web
           };
         const response = await axios.get(url, { headers });
         let result = response.data;
         song.idVideo = result.items[0].id.videoId;
+        
+        console.log(song)
         await song.save();
         res.send('Cancion añadida.').status(200);
     } catch (error) {
@@ -52,3 +55,8 @@ exports.getSong = async(req, res) => {
         res.status(400).send('Hubo un error');
     }
 }
+
+
+// exports.updateSong = async(req, res) = >{
+
+// }
