@@ -6,12 +6,16 @@ exports.createSong = async(req, res) => {
         let aux;
         const song = new Song(req.body);
         const {name, author} = song;
+        console.log(typeof name)
         if (author) {
-            aux = name.replaceAll(" ", "%20") + "%20" + author.replaceAll(" ", "%20")
+            aux = name.replace(" ", "%20") + "%20" + author.replace(" ", "%20");
         } else {
-            aux = name.replaceAll(" ", "%20") 
+            aux = name.replace(" ", "%20")
         }
+
         const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${aux}&key=${process.env.API_KEY_GOOGLE}`
+        
+        console.log(url)
         const headers = {
             Referer: process.env.URL_FRONT // Reemplaza esto con la URL de tu sitio web
           };
