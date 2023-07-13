@@ -1,6 +1,6 @@
 const { Mongoose } = require('mongoose');
 const Song = require('../models/song')
-const fetch = require('node-fetch');
+const axios = require('axios');
 
 
 exports.createSong = async(req, res) => {
@@ -21,10 +21,9 @@ exports.createSong = async(req, res) => {
         const headers = {
             Referer: process.env.URL_FRONT // Reemplaza esto con la URL de tu sitio web
           };
-        let a = await fetch(url, {headers})
-        let result = await a.json();
+        const response = await axios.get(url, { headers });
+        let result = response.data;
         song.idVideo = result.items[0].id.videoId;
-        
         await song.save();
         res.send('Cancion añadida.').status(200);
     } catch (error) {
