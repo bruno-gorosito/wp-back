@@ -6,9 +6,9 @@ exports.createSong = async(req, res) => {
         let aux;
         const song = new Song(req.body);
         if (song.author) {
-            aux = song.name.replaceAll(" ", "%20") + "%20" + song.author.replaceAll(" ", "%20")
+            aux = String(song.name).replaceAll(" ", "%20") + "%20" +String(song.author).replaceAll(" ", "%20")
         } else {
-            aux = song.name.replaceAll(" ", "%20") 
+            aux = String(song.name).replaceAll(" ", "%20") 
         }
         const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${aux}&key=${process.env.API_KEY_GOOGLE}`
         const headers = {

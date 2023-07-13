@@ -26,7 +26,7 @@ const SongSchema = mongoose.Schema({
         default: 'Sin definir'
     },
     idVideo: {
-            type: String
+        type: String
     }
 });
 
