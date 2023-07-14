@@ -13,9 +13,9 @@ const SongSchema = mongoose.Schema({
         trim: true
     },
     lyric: {
-        type: String,
-        default:'Letra no disponible', 
-        trim: true
+        type: [mongoose.Schema.Types.Mixed],
+        of: [mongoose.Schema.Types.Mixed], 
+        default: []
     },
     tone: {
         type: String,

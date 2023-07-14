@@ -6,10 +6,11 @@ const axios = require('axios');
 exports.createSong = async(req, res) => {
     try {
         let aux;
-        console.log(req.body)
         const song = new Song(req.body);
+        console.log(req.body)
+        console.log(song.lyric)
         const {name, author} = song;
-
+    
         
         if (author) {
             aux = name.replace(" ", "%20") + "%20" + author.replace(" ", "%20");
