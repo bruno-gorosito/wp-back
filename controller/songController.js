@@ -29,10 +29,10 @@ exports.createSong = async(req, res) => {
         
         console.log(song)
         await song.save();
-        res.send('Cancion añadida.').status(200);
+        return res.send('Cancion añadida.').status(200);
     } catch (error) {
         console.log(error);
-        res.status(400).send('Hubo un error');
+        return res.status(400).send('Hubo un error');
     }
 }
 
@@ -40,24 +40,30 @@ exports.createSong = async(req, res) => {
 exports.getSongs = async(req, res) => {
     try {
         const songs =  await Song.find({});
-        res.send(songs);
+        return res.send(songs);
     } catch (error) {
         console.log(error);
-        res.status(400).send('Hubo un error');
+        return res.status(400).send('Hubo un error');
     }
 }
 
 exports.getSong = async(req, res) => {
     try {
         const song = await Song.findById(req.params.id);
-        res.send(song);
+        return res.status(200).send(song);
     } catch (error) {
         console.log(error);
-        res.status(400).send('Hubo un error');
+        return res.status(400).send('Hubo un error');
     }
 }
 
 
-// exports.updateSong = async(req, res) = >{
-
-// }
+exports.updateSong = async(req, res) => {
+    try {
+        const result = await Song.findByIdAndUpdate(req.params.id, req.body);
+        return res.status(200).send(req.body)
+    } catch (error) {
+        console.log(error);
+        return res.status(400).send('Hubo un error');
+    }
+}

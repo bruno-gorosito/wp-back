@@ -26,6 +26,7 @@ app.use(bodyParser.json());
 const port = process.env.PORT || 4000;
 
 app.use('/api/songs', require('./routes/songs'))
+app.use('/api/users', require('./routes/users'))
 app.get('/', (req, res) => res.send('Hi'))
 
 

@@ -1,21 +1,28 @@
 const express = require('express');
 const songController = require('../controller/songController');
+const auth = require('../middleware/auth');
 
 const router = express.Router();
 
 
 //create a song
 // api/songs
-router.post('/', (req, res) => {
-    songController.createSong(req, res); 
-})
+router.post('/',
+    auth,
+    songController.createSong
+)
 
-router.get('/', (req, res) => {
-    songController.getSongs(req, res)
-})
+router.get('/', 
+    songController.getSongs
+)
 
-router.get('/:id', (req, res) => {
-    songController.getSong(req, res)
-})
+router.get('/:id',
+    songController.getSong
+)
+
+router.put('/edit/:id', 
+    auth,
+    songController.updateSong
+)
 
 module.exports = router;
