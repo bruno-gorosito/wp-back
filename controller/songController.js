@@ -7,8 +7,6 @@ exports.createSong = async(req, res) => {
     try {
         let aux;
         const song = new Song(req.body);
-        console.log(req.body)
-        console.log(song.lyric)
         const {name, author} = song;
     
         

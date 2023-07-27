@@ -8,12 +8,11 @@ exports.createUser = async(req, res) => {
         const salt = bcrypt.genSaltSync(10);
         password = await bcrypt.hashSync(password, salt)
         const user = await new User({name, lastName, email, password})
-        console.log(user)
         await user.save()
         res.send(user)
     } catch (error) {
         console.log(error);
-        res.send('Hubo un error')
+        res.send('Hubo un error').status(400)
     }
 }
 
@@ -29,7 +28,6 @@ exports.login = async(req, res) => {
         if (!correct) {
             return res.status(400).send('Datos incorrectos')
         }
-        console.log(req.body)
         const {password, ...userWithoutPass} = user
         const payload = {
             usuario: {
@@ -42,7 +40,6 @@ exports.login = async(req, res) => {
             expiresIn: 3600
         })
 
-        // res.cookies().set('')
         return res.send(token)
     } catch (error) {
         console.log(error)
