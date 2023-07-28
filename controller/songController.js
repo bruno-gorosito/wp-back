@@ -58,8 +58,25 @@ exports.getSong = async(req, res) => {
 
 exports.updateSong = async(req, res) => {
     try {
-        const result = await Song.findByIdAndUpdate(req.params.id, req.body);
-        return res.status(200).send(req.body)
+        const song = await Song.findById(req.params.id);
+        console.log(req.body)
+        let songUpdated = req.body
+        if (song.name !== req.body.name) {
+            if (songUpdated) {
+                aux = songUpdated.name.replace(" ", "%20") + "%20" + songUpdated.author.replace(" ", "%20");
+            } else {
+                aux = songUpdated.name.replace(" ", "%20")
+            }
+            const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${aux}&key=${process.env.API_KEY_GOOGLE}`
+            const headers = {
+                Referer: process.env.URL_FRONT // Reemplaza esto con la URL de tu sitio web
+              };
+            const response = await axios.get(url, { headers });
+            let result2 = response.data;
+            songUpdated.idVideo = result2.items[0].id.videoId;
+        }
+        const result = await Song.findByIdAndUpdate(req.params.id, songUpdated);
+        return res.status(200).send(songUpdated)
     } catch (error) {
         console.log(error);
         return res.status(400).send('Hubo un error');
