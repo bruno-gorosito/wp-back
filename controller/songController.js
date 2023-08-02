@@ -15,7 +15,7 @@ exports.createSong = async(req, res) => {
         } else {
             aux = name.replace(" ", "%20")
         }
-
+        
         const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${aux}&key=${process.env.API_KEY_GOOGLE}`
         
         const headers = {
@@ -25,7 +25,6 @@ exports.createSong = async(req, res) => {
         let result = response.data;
         song.idVideo = result.items[0].id.videoId;
         
-        console.log(song)
         await song.save();
         return res.send('Cancion añadida.').status(200);
     } catch (error) {
