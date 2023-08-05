@@ -27,6 +27,9 @@ const SongSchema = mongoose.Schema({
     },
     idVideo: {
         type: String
+    },
+    chords: {
+        type: String
     }
 });
 
